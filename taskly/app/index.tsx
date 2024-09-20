@@ -1,5 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, TextInput, View, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  ScrollView,
+  FlatList,
+} from "react-native";
 import { theme } from "../theme";
 import { ShoppingListItem } from "../components/ShoppingListItem";
 import { Link } from "expo-router";
@@ -33,26 +39,25 @@ export default function App() {
   };
 
   return (
-    <ScrollView
+    <FlatList
+      data={shoppingList}
+      stickyHeaderIndices={[0]}
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
-      stickyHeaderIndices={[0]}
-    >
-      {/* <StatusBar style="auto" /> */}
-      {/* <Link href="/counter">Counter</Link>
-      <Link href="/idea">Idea</Link> */}
-      <TextInput
-        value={value}
-        onChangeText={setValue}
-        returnKeyType="done"
-        onSubmitEditing={handleSubmit}
-        placeholder="E.g. coffee"
-        style={styles.textInput}
-      />
-      {shoppingList.map((item) => (
-        <ShoppingListItem key={item.id} name={item.name} />
-      ))}
-    </ScrollView>
+      ListHeaderComponent={() => (
+        <TextInput
+          value={value}
+          onChangeText={setValue}
+          returnKeyType="done"
+          onSubmitEditing={handleSubmit}
+          placeholder="E.g. coffee"
+          style={styles.textInput}
+        />
+      )}
+      // no need for a `key` if the item already has either an id or a key on it
+      // otherwise use the `keyExtractor` prop
+      renderItem={({ item }) => <ShoppingListItem name={item.name} />}
+    />
   );
 }
 
