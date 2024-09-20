@@ -5,6 +5,7 @@ import {
   View,
   ScrollView,
   FlatList,
+  Text,
 } from "react-native";
 import { theme } from "../theme";
 import { ShoppingListItem } from "../components/ShoppingListItem";
@@ -44,7 +45,12 @@ export default function App() {
       stickyHeaderIndices={[0]}
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
-      ListHeaderComponent={() => (
+      ListEmptyComponent={
+        <View style={styles.listEmptyContainer}>
+          <Text>Your shopping list is empty</Text>
+        </View>
+      }
+      ListHeaderComponent={
         <TextInput
           value={value}
           onChangeText={setValue}
@@ -53,7 +59,7 @@ export default function App() {
           placeholder="E.g. coffee"
           style={styles.textInput}
         />
-      )}
+      }
       // no need for a `key` if the item already has either an id or a key on it
       // otherwise use the `keyExtractor` prop
       renderItem={({ item }) => <ShoppingListItem name={item.name} />}
@@ -79,5 +85,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     borderRadius: 50,
     backgroundColor: theme.colorWhite,
+  },
+  listEmptyContainer: {
+    marginVertical: 18,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
