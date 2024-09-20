@@ -7,7 +7,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <ShoppingListItem name="Coffee" />
+      <ShoppingListItem name="Coffee" isCompleted />
       <ShoppingListItem name="Tea" />
       <ShoppingListItem name="Sugar" />
     </View>
