@@ -8,8 +8,8 @@ export default function App() {
   return (
     <View style={styles.container}>
       {/* <StatusBar style="auto" /> */}
-      <Link href="/counter">Counter</Link>
-      <Link href="/idea">Idea</Link>
+      {/* <Link href="/counter">Counter</Link>
+      <Link href="/idea">Idea</Link> */}
       <ShoppingListItem name="Coffee" isCompleted />
       <ShoppingListItem name="Tea" />
       <ShoppingListItem name="Sugar" />
