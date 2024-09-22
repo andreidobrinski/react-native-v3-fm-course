@@ -22,3 +22,8 @@ module.exports = {
   },
 };
 ```
+
+## Troubleshooting
+
+- If something goes wrong, restart the metro bundler
+- If the issue perists, restart it with `--reset-cache`
