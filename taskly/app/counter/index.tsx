@@ -1,13 +1,31 @@
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router";
+import { Alert, Text, View, StyleSheet, TouchableOpacity } from "react-native";
+// import { useRouter } from "expo-router";
 import { theme } from "../../theme";
 import { registerForPushNotificationsAsync } from "../../utils/registerForPushNotificationsAsync";
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
 
 export default function CounterScreen() {
-  const router = useRouter();
-  const handleRequestPermission = async () => {
+  // const router = useRouter();
+  const scheduleNotification = async () => {
     const result = await registerForPushNotificationsAsync();
-    console.log("result", result);
+    if (result === "granted") {
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: "I'm a notification from your app",
+        },
+        trigger: {
+          seconds: 5,
+        },
+      });
+    } else {
+      if (Device.isDevice) {
+        Alert.alert(
+          "Unable to schedule notification",
+          "Enable the notification permission for Expo Go in Settings"
+        );
+      }
+    }
   };
 
   return (
@@ -20,9 +38,9 @@ export default function CounterScreen() {
       <TouchableOpacity
         style={styles.button}
         activeOpacity={0.8}
-        onPress={handleRequestPermission}
+        onPress={scheduleNotification}
       >
-        <Text style={styles.buttonText}>Request permission</Text>
+        <Text style={styles.buttonText}>Schedule notification</Text>
       </TouchableOpacity>
       <Text style={styles.text}>Counter</Text>
     </View>
